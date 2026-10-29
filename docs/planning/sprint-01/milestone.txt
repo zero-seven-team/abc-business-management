@@ -1,3 +1,0 @@
-Thời lượng: 2 tuần. Ngày bắt đầu/kết thúc: 24/10/2026–07/11/2026.
-Mục tiêu: hoàn thành PB-01 — tạo và lưu hợp đồng Draft cho khách hàng có sẵn, kiểm tra dữ liệu, demo được từ giao diện đến PostgreSQL.
-Phạm vi: 1 User Story (8 SP), 19 task (99 giờ).

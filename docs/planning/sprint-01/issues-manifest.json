@@ -4,8 +4,8 @@
   "source_sha256": "1724b23b676eb8ca788e59a9697d1ad2744a07ad056fec679e119fa1d44cb732",
   "milestone": "Sprint 01",
   "duration_weeks": 2,
-  "start_date": null,
-  "due_date": null,
+  "start_date": "2026-10-24",
+  "due_date": "2026-11-07",
   "parent": {
     "id": "PB-01",
     "title": "[PB-01] Tạo và lưu hợp đồng Draft",

@@ -1,15 +1,17 @@
 # TASK-01 — Tổ chức Sprint 01 trên GitHub
 
-Kế hoạch nguồn: [SprintPlan_QTKD_New_Final.xlsx](SprintPlan_QTKD_New_Final.xlsx), giữ nguyên bản nhóm gửi. Sprint 01 dài **2 tuần**, thực hiện **PB-01 (8 SP)** với **19 task, 99 giờ**. Chưa đặt ngày bắt đầu/kết thúc hoặc hạn nộp vì nhóm chưa có thông tin này.
+Kế hoạch nguồn: [SprintPlan_QTKD_New_Final.xlsx](SprintPlan_QTKD_New_Final.xlsx), giữ nguyên bản nhóm gửi. Sprint 01 dài **2 tuần**, thực hiện **PB-01 (8 SP)** với **19 task, 99 giờ**. Nhóm đã chọn thời gian **24/10/2026–07/11/2026**; hạn Milestone là **07/11/2026**. Bản Excel nguồn giữ nguyên như lúc gửi.
 
 Thư mục này chuẩn bị nội dung để tạo Issues. Việc thêm file vào repo **chưa tạo Milestone, Issues, Project hoặc branch rule**. Các mục dưới đây cần được thiết lập trên giao diện GitHub và kiểm tra thực tế.
+
+Có thể dùng [script Windows](WINDOWS.md) để tạo các Issue còn thiếu, gán người và liên kết PB-01. Script dùng Milestone đã tạo sẵn.
 
 ## 1. Tạo Milestone Sprint 01
 
 1. Mở [Milestones của repo](https://github.com/zero-seven-team/abc-business-management/milestones).
 2. Chọn **New milestone**.
 3. Title: `Sprint 01`.
-4. Due date: để trống.
+4. Due date: `07/11/2026`.
 5. Description: sao chép [nội dung milestone](milestone.txt).
 6. Chọn **Create milestone**. Nếu đã tồn tại Milestone Sprint 01 thì dùng lại, không tạo trùng.
 

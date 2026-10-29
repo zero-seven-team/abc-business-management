@@ -1,0 +1,305 @@
+{
+  "repository": "zero-seven-team/abc-business-management",
+  "source": "SprintPlan_QTKD_New_Final.xlsx",
+  "source_sha256": "1724b23b676eb8ca788e59a9697d1ad2744a07ad056fec679e119fa1d44cb732",
+  "milestone": "Sprint 01",
+  "duration_weeks": 2,
+  "start_date": null,
+  "due_date": null,
+  "parent": {
+    "id": "PB-01",
+    "title": "[PB-01] Tạo và lưu hợp đồng Draft",
+    "story_points": 8,
+    "labels": [
+      "user-story"
+    ],
+    "body_file": "issues/PB-01.md"
+  },
+  "tasks": [
+    {
+      "id": "TASK-01",
+      "title": "[TASK-01] Tạo repo GitHub, Issues và Project board cho Sprint 01",
+      "assignee": "LONGTRAN2700",
+      "member": "Trần Ngọc Long",
+      "estimate_hours": 4,
+      "spent_hours": 2,
+      "remaining_hours": 2,
+      "status": "Đang làm",
+      "labels": [
+        "task",
+        "setup"
+      ],
+      "body_file": "issues/TASK-01.md"
+    },
+    {
+      "id": "TASK-02",
+      "title": "[TASK-02] Phân tích US tạo hợp đồng",
+      "assignee": "KN12345N",
+      "member": "Nguyễn Khả Như",
+      "estimate_hours": 4,
+      "spent_hours": 0,
+      "remaining_hours": 4,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "analysis"
+      ],
+      "body_file": "issues/TASK-02.md"
+    },
+    {
+      "id": "TASK-03",
+      "title": "[TASK-03] Use case diagram và đặc tả \"Tạo hợp đồng\"",
+      "assignee": "KN12345N",
+      "member": "Nguyễn Khả Như",
+      "estimate_hours": 5,
+      "spent_hours": 0,
+      "remaining_hours": 5,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "uml"
+      ],
+      "body_file": "issues/TASK-03.md"
+    },
+    {
+      "id": "TASK-04",
+      "title": "[TASK-04] Khởi tạo solution .NET Core Web API, PostgreSQL, Swagger, EF Core",
+      "assignee": "linh285",
+      "member": "Lê Quang Linh",
+      "estimate_hours": 8,
+      "spent_hours": 0,
+      "remaining_hours": 8,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "backend"
+      ],
+      "body_file": "issues/TASK-04.md"
+    },
+    {
+      "id": "TASK-05",
+      "title": "[TASK-05] Thiết kế bảng dữ liệu, migration và seed",
+      "assignee": "linh285",
+      "member": "Lê Quang Linh",
+      "estimate_hours": 8,
+      "spent_hours": 0,
+      "remaining_hours": 8,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "database"
+      ],
+      "body_file": "issues/TASK-05.md"
+    },
+    {
+      "id": "TASK-06",
+      "title": "[TASK-06] Xử lý lỗi chung (ProblemDetails) và ghi log kỹ thuật",
+      "assignee": "linh285",
+      "member": "Lê Quang Linh",
+      "estimate_hours": 3,
+      "spent_hours": 0,
+      "remaining_hours": 3,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "backend"
+      ],
+      "body_file": "issues/TASK-06.md"
+    },
+    {
+      "id": "TASK-07",
+      "title": "[TASK-07] Class diagram và Sequence diagram luồng tạo hợp đồng",
+      "assignee": "ThachY-23120411",
+      "member": "Thạch Ý",
+      "estimate_hours": 6,
+      "spent_hours": 0,
+      "remaining_hours": 6,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "uml"
+      ],
+      "body_file": "issues/TASK-07.md"
+    },
+    {
+      "id": "TASK-08",
+      "title": "[TASK-08] API tạo hợp đồng (POST /contracts)",
+      "assignee": "ThachY-23120411",
+      "member": "Thạch Ý",
+      "estimate_hours": 8,
+      "spent_hours": 0,
+      "remaining_hours": 8,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "backend"
+      ],
+      "body_file": "issues/TASK-08.md"
+    },
+    {
+      "id": "TASK-09",
+      "title": "[TASK-09] API danh sách khách hàng và tải tệp đính kèm",
+      "assignee": "ThachY-23120411",
+      "member": "Thạch Ý",
+      "estimate_hours": 5,
+      "spent_hours": 0,
+      "remaining_hours": 5,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "backend"
+      ],
+      "body_file": "issues/TASK-09.md"
+    },
+    {
+      "id": "TASK-10",
+      "title": "[TASK-10] Thiết kế Figma và prototype màn tạo hợp đồng",
+      "assignee": "LONGTRAN2700",
+      "member": "Trần Ngọc Long",
+      "estimate_hours": 6,
+      "spent_hours": 0,
+      "remaining_hours": 6,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "design"
+      ],
+      "body_file": "issues/TASK-10.md"
+    },
+    {
+      "id": "TASK-11",
+      "title": "[TASK-11] Khởi tạo project giao diện React + Vite + Tailwind + shadcn/ui",
+      "assignee": "LONGTRAN2700",
+      "member": "Trần Ngọc Long",
+      "estimate_hours": 4,
+      "spent_hours": 0,
+      "remaining_hours": 4,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "frontend"
+      ],
+      "body_file": "issues/TASK-11.md"
+    },
+    {
+      "id": "TASK-12",
+      "title": "[TASK-12] Xây dựng giao diện tạo hợp đồng",
+      "assignee": "LONGTRAN2700",
+      "member": "Trần Ngọc Long",
+      "estimate_hours": 9,
+      "spent_hours": 0,
+      "remaining_hours": 9,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "frontend"
+      ],
+      "body_file": "issues/TASK-12.md"
+    },
+    {
+      "id": "TASK-13",
+      "title": "[TASK-13] Viết test case cho PB-01",
+      "assignee": "PhuHuuDang",
+      "member": "Đặng Hữu Phú",
+      "estimate_hours": 5,
+      "spent_hours": 0,
+      "remaining_hours": 5,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "test"
+      ],
+      "body_file": "issues/TASK-13.md"
+    },
+    {
+      "id": "TASK-14",
+      "title": "[TASK-14] Unit test và integration test cho API tạo hợp đồng",
+      "assignee": "PhuHuuDang",
+      "member": "Đặng Hữu Phú",
+      "estimate_hours": 6,
+      "spent_hours": 0,
+      "remaining_hours": 6,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "test"
+      ],
+      "body_file": "issues/TASK-14.md"
+    },
+    {
+      "id": "TASK-15",
+      "title": "[TASK-15] Cấu hình CI trên GitHub",
+      "assignee": "PhuHuuDang",
+      "member": "Đặng Hữu Phú",
+      "estimate_hours": 4,
+      "spent_hours": 0,
+      "remaining_hours": 4,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "ci"
+      ],
+      "body_file": "issues/TASK-15.md"
+    },
+    {
+      "id": "TASK-16",
+      "title": "[TASK-16] Kiểm thử luồng tạo hợp đồng với API và database thật",
+      "assignee": "PhuHuuDang",
+      "member": "Đặng Hữu Phú",
+      "estimate_hours": 4,
+      "spent_hours": 0,
+      "remaining_hours": 4,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "test"
+      ],
+      "body_file": "issues/TASK-16.md"
+    },
+    {
+      "id": "TASK-17",
+      "title": "[TASK-17] Viết README",
+      "assignee": "KN12345N",
+      "member": "Nguyễn Khả Như",
+      "estimate_hours": 3,
+      "spent_hours": 0,
+      "remaining_hours": 3,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "docs"
+      ],
+      "body_file": "issues/TASK-17.md"
+    },
+    {
+      "id": "TASK-18",
+      "title": "[TASK-18] Tổng hợp báo cáo Sprint 01",
+      "assignee": "KN12345N",
+      "member": "Nguyễn Khả Như",
+      "estimate_hours": 4,
+      "spent_hours": 0,
+      "remaining_hours": 4,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "docs"
+      ],
+      "body_file": "issues/TASK-18.md"
+    },
+    {
+      "id": "TASK-19",
+      "title": "[TASK-19] Demo, Sprint Review và Retrospective",
+      "assignee": "KN12345N",
+      "member": "Nguyễn Khả Như",
+      "estimate_hours": 3,
+      "spent_hours": 0,
+      "remaining_hours": 3,
+      "status": "Chưa bắt đầu",
+      "labels": [
+        "task",
+        "process"
+      ],
+      "body_file": "issues/TASK-19.md"
+    }
+  ]
+}

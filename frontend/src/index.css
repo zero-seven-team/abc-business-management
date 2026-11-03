@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* ABC Logistics Design System Tokens */
+  --color-primary: #1D4ED8;
+  --color-primary-hover: #1E40AF;
+  --color-sidebar: #0F172A;
+  --color-surface: #FFFFFF;
+  --color-background: #F8FAFC;
+  --color-border-default: #E2E8F0;
+
+  /* Semantic Status Colors */
+  --color-success: #16A34A;
+  --color-warning: #D97706;
+  --color-danger: #DC2626;
+  --color-info: #0284C7;
+  --color-esign: #7C3AED;
+}
+
+@layer base {
+  * {
+    border-color: #E2E8F0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F8FAFC;
+    color: #0F172A;
+    margin: 0;
+  }
+}

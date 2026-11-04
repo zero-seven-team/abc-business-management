@@ -1,0 +1,88 @@
+name: ABC Business Management CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - "feat/**"
+      - "fix/**"
+      - "test/**"
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  backend-build-and-test:
+    name: Backend (.NET 10 & PostgreSQL)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres_password
+          POSTGRES_DB: abc_business_management_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=abc_business_management_test;Username=postgres;Password=postgres_password"
+      ASPNETCORE_ENVIRONMENT: Testing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore Backend dependencies
+        working-directory: ./backend
+        run: dotnet restore AbcBusinessManagement.sln
+
+      - name: Build Backend solution
+        working-directory: ./backend
+        run: dotnet build AbcBusinessManagement.sln --configuration Release --no-restore
+
+      - name: Run Automated Tests (Unit & Integration Tests)
+        run: |
+          if [ -d "tests" ] && [ -n "$(find tests -name '*.csproj' -print -quit)" ]; then
+            for proj in $(find tests -name '*.csproj'); do
+              dotnet test "$proj" --configuration Release --logger "trx;LogFileName=test-results.trx"
+            done
+          else
+            echo "No test projects found in tests/ directory yet. Skipping test execution."
+          fi
+
+  frontend-build:
+    name: Frontend (React + TypeScript + Vite)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+
+      - name: Install Frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Type-check and build Frontend
+        working-directory: ./frontend
+        run: npm run build

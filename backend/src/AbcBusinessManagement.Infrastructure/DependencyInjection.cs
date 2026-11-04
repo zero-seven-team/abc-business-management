@@ -1,4 +1,6 @@
+using AbcBusinessManagement.Application.Interfaces;
 using AbcBusinessManagement.Infrastructure.Persistence;
+using AbcBusinessManagement.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,10 @@ public static class DependencyInjection
             options.UseNpgsql(
                 connectionString,
                 npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+
+        services.AddScoped<IContractService, ContractService>();
+        services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IContractAttachmentService, ContractAttachmentService>();
 
         return services;
     }

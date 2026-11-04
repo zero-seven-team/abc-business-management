@@ -1,10 +1,21 @@
 using AbcBusinessManagement.Application;
+using AbcBusinessManagement.Api.Errors;
+using AbcBusinessManagement.Api.Middleware;
 using AbcBusinessManagement.Infrastructure;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Logging.ClearProviders();
+builder.Logging.AddFilter("Microsoft.AspNetCore.Hosting.Diagnostics", LogLevel.Warning);
+builder.Logging.AddJsonConsole(options =>
+{
+    options.IncludeScopes = true;
+    options.UseUtcTimestamp = true;
+    options.TimestampFormat = "yyyy-MM-ddTHH:mm:ss.fffZ";
+});
+
+builder.Services.AddApiErrorHandling();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -15,8 +26,6 @@ builder.Services.AddSwaggerGen(options =>
         Description = "API quản lý nghiệp vụ kinh doanh và hợp đồng - Công ty ABC"
     });
 });
-
-builder.Services.AddProblemDetails();
 
 builder.Services.AddCors(options =>
 {
@@ -34,7 +43,11 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseExceptionHandler();
+app.UseStatusCodePages(async context =>
+    await ProblemResponse.WriteAsync(context.HttpContext,
+        ProblemResponse.FromStatusCode(context.HttpContext.Response.StatusCode), context.HttpContext.RequestAborted));
 
 if (app.Environment.IsDevelopment())
 {

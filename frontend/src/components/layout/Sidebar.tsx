@@ -32,9 +32,9 @@ export const Sidebar: React.FC = () => {
       aria-label="Thanh điều hướng chính"
     >
       {/* Brand Logo */}
-      <div className="flex h-16 items-center gap-3 px-4 border-b border-slate-800/80">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#1D4ED8] text-white shadow-xs">
-          <Box className="h-5 w-5" />
+      <div className="flex h-14 shrink-0 items-center gap-2.5 px-4 border-b border-slate-800/80">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#1D4ED8] text-white shadow-xs">
+          <Box className="h-4.5 w-4.5" />
         </div>
         <div className="min-w-0 flex-1">
           <div className="truncate text-sm font-bold tracking-tight text-white">
@@ -47,20 +47,20 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
+      <div className="sidebar-scroll flex-1 overflow-y-auto px-3 py-2.5">
         <div>
-          <div className="px-3 mb-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          <div className="px-3 mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
             Không gian làm việc
           </div>
 
-          <nav className="space-y-1">
+          <nav className="space-y-0.5">
             {/* Trang chủ - Tổng quan công việc */}
             <NavLink
               to="/"
               end
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold shadow-xs'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -72,18 +72,18 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             {/* Quản lý hợp đồng */}
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               <button
                 type="button"
                 onClick={() => setContractsOpen((prev) => !prev)}
                 className={cn(
-                  'flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-xs font-medium transition-colors cursor-pointer',
+                  'flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer',
                   isContractSection
                     ? 'bg-slate-800/90 text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
                 )}
               >
-                <span className="flex items-center gap-3">
+                <span className="flex items-center gap-2.5">
                   <FileText className="h-4 w-4 shrink-0" />
                   <span>Quản lý hợp đồng</span>
                 </span>
@@ -96,13 +96,13 @@ export const Sidebar: React.FC = () => {
               </button>
 
               {contractsOpen && (
-                <div className="ml-4 space-y-0.5 border-l border-slate-800 pl-3 pt-0.5">
+                <div className="ml-4 space-y-0.5 border-l border-slate-800 pl-2.5 pt-0.5">
                   <NavLink
                     to="/contracts"
                     end
                     className={({ isActive }) =>
                       cn(
-                        'flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs transition-colors',
+                        'flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs transition-colors',
                         isActive
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'
@@ -117,7 +117,7 @@ export const Sidebar: React.FC = () => {
                     to="/contracts/new"
                     className={({ isActive }) =>
                       cn(
-                        'flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs transition-colors',
+                        'flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs transition-colors',
                         isActive
                           ? 'bg-[#1D4ED8] text-white font-semibold'
                           : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'
@@ -136,7 +136,7 @@ export const Sidebar: React.FC = () => {
               to="/customers"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -152,7 +152,7 @@ export const Sidebar: React.FC = () => {
               to="/quotations"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -168,7 +168,7 @@ export const Sidebar: React.FC = () => {
               to="/payment-requests"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -184,18 +184,18 @@ export const Sidebar: React.FC = () => {
               to="/approvals"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center justify-between rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
                 )
               }
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-2.5">
                 <CheckSquare className="h-4 w-4 shrink-0" />
                 <span>Phê duyệt</span>
               </span>
-              <span className="inline-flex h-5 min-w-[22px] items-center justify-center rounded-md bg-[#DC2626] px-1.5 text-[11px] font-bold text-white">
+              <span className="inline-flex h-4.5 min-w-[20px] items-center justify-center rounded-md bg-[#DC2626] px-1.5 text-[10px] font-bold text-white">
                 8
               </span>
             </NavLink>
@@ -205,7 +205,7 @@ export const Sidebar: React.FC = () => {
               to="/e-sign"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -221,7 +221,7 @@ export const Sidebar: React.FC = () => {
               to="/notifications"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -237,7 +237,7 @@ export const Sidebar: React.FC = () => {
               to="/audit-logs"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
@@ -249,13 +249,13 @@ export const Sidebar: React.FC = () => {
             </NavLink>
 
             {/* Quản trị */}
-            <div className="pt-1">
+            <div>
               <button
                 type="button"
                 onClick={() => setAdminOpen((prev) => !prev)}
-                className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white cursor-pointer"
+                className="flex w-full items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-slate-800/70 hover:text-white cursor-pointer"
               >
-                <span className="flex items-center gap-3">
+                <span className="flex items-center gap-2.5">
                   <Settings className="h-4 w-4 shrink-0" />
                   <span>Quản trị</span>
                 </span>
@@ -267,14 +267,14 @@ export const Sidebar: React.FC = () => {
                 />
               </button>
               {adminOpen && (
-                <div className="ml-4 space-y-0.5 border-l border-slate-800 pl-3 pt-0.5 text-xs text-slate-400">
-                  <div className="px-2.5 py-1.5 hover:text-white cursor-pointer">
+                <div className="ml-4 space-y-0.5 border-l border-slate-800 pl-2.5 pt-0.5 text-xs text-slate-400">
+                  <div className="px-2.5 py-1 hover:text-white cursor-pointer">
                     Người dùng
                   </div>
-                  <div className="px-2.5 py-1.5 hover:text-white cursor-pointer">
+                  <div className="px-2.5 py-1 hover:text-white cursor-pointer">
                     Phân quyền
                   </div>
-                  <div className="px-2.5 py-1.5 hover:text-white cursor-pointer">
+                  <div className="px-2.5 py-1 hover:text-white cursor-pointer">
                     Quy trình
                   </div>
                 </div>
@@ -285,8 +285,8 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Department & Footer Info */}
-      <div className="border-t border-slate-800/80 p-3 space-y-2.5">
-        <div className="flex items-center justify-between rounded-lg bg-slate-800/80 px-3 py-2">
+      <div className="shrink-0 border-t border-slate-800/80 p-2.5 space-y-2">
+        <div className="flex items-center justify-between rounded-lg bg-slate-800/80 px-2.5 py-1.5">
           <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
             <Sparkles className="h-3.5 w-3.5 text-violet-400" />
             <span>Phòng Kinh doanh - B2B</span>

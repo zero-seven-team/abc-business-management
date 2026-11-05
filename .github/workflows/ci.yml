@@ -55,6 +55,8 @@ jobs:
         run: dotnet build AbcBusinessManagement.sln --configuration Release --no-restore
 
       - name: Run Automated Tests (Unit & Integration Tests)
+        env:
+          TEST_POSTGRES_CONNECTION: "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres_password"
         run: |
           if [ -d "tests" ] && [ -n "$(find tests -name '*.csproj' -print -quit)" ]; then
             for proj in $(find tests -name '*.csproj'); do
@@ -86,3 +88,7 @@ jobs:
       - name: Type-check and build Frontend
         working-directory: ./frontend
         run: npm run build
+
+      - name: Run Frontend regression tests
+        working-directory: ./frontend
+        run: npm test

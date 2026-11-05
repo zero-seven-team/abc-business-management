@@ -4,11 +4,10 @@ import { Controller, useForm, type FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import {
-  ArrowLeft,
+  AlertTriangle,
   Building2,
   Info,
   Loader2,
-  Lock,
   Plus,
   RotateCw,
   Save,
@@ -32,11 +31,9 @@ import {
   AttachmentDropzone,
   type AttachmentItem,
 } from '@/components/contracts/AttachmentDropzone';
-import { cn } from '@/lib/utils';
 import {
   CONTRACT_FORM_FIELDS,
   CREATE_CONTRACT_DEFAULT_VALUES,
-  DEMO_CREATED_BY,
   createContractSchema,
   parseContractValue,
   validateAttachmentFile,
@@ -69,6 +66,41 @@ interface FormErrorBanner {
 }
 
 const FORM_ID = 'create-contract-form';
+const DRAFT_STORAGE_KEY = 'abc_draft_contract_form';
+
+function loadSavedFormDraft(): CreateContractFormValues {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) return CREATE_CONTRACT_DEFAULT_VALUES;
+    const parsed = JSON.parse(raw) as Partial<CreateContractFormValues>;
+    return {
+      contractName:
+        typeof parsed.contractName === 'string' ? parsed.contractName : '',
+      customerId:
+        typeof parsed.customerId === 'string' ? parsed.customerId : '',
+      effectiveFrom:
+        typeof parsed.effectiveFrom === 'string' ? parsed.effectiveFrom : '',
+      effectiveTo:
+        typeof parsed.effectiveTo === 'string' ? parsed.effectiveTo : '',
+      contractValue:
+        typeof parsed.contractValue === 'string' ? parsed.contractValue : '',
+      paymentTerms:
+        typeof parsed.paymentTerms === 'string' ? parsed.paymentTerms : '',
+      serviceTerms:
+        typeof parsed.serviceTerms === 'string' ? parsed.serviceTerms : '',
+    };
+  } catch {
+    return CREATE_CONTRACT_DEFAULT_VALUES;
+  }
+}
+
+function hasNonEmptyFormValues(
+  values: Partial<CreateContractFormValues>
+): boolean {
+  return Object.values(values).some(
+    (value) => typeof value === 'string' && value.trim().length > 0
+  );
+}
 
 let localIdSeed = 0;
 const nextLocalId = () => `att-${Date.now()}-${++localIdSeed}`;
@@ -99,6 +131,7 @@ export const CreateContractPage: React.FC = () => {
   const [createdContract, setCreatedContract] =
     useState<ContractDraftResponse | null>(null);
   const [formError, setFormError] = useState<FormErrorBanner | null>(null);
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   // ---- Tệp đính kèm: ref là nguồn dữ liệu đồng bộ, state để render ----
   const itemsRef = useRef<AttachmentItem[]>([]);
@@ -131,13 +164,45 @@ export const CreateContractPage: React.FC = () => {
     formState: { errors },
   } = useForm<CreateContractFormValues>({
     resolver: zodResolver(createContractSchema),
-    defaultValues: CREATE_CONTRACT_DEFAULT_VALUES,
+    defaultValues: loadSavedFormDraft(),
     mode: 'onTouched',
   });
 
-  const selectedCustomerId = watch('customerId');
-  const effectiveFrom = watch('effectiveFrom');
+  const watchedValues = watch();
+  const selectedCustomerId = watchedValues.customerId;
+  const effectiveFrom = watchedValues.effectiveFrom;
   const selectedCustomer = customers.find((c) => c.id === selectedCustomerId);
+  const hasUnsavedData =
+    !createdContract &&
+    (hasNonEmptyFormValues(watchedValues) || items.length > 0);
+
+  // ---- Tự động lưu nháp tạm vào sessionStorage khi nhập liệu ----
+  useEffect(() => {
+    const subscription = watch((values) => {
+      if (createdContract) return;
+      try {
+        if (hasNonEmptyFormValues(values)) {
+          sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(values));
+        } else {
+          sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+        }
+      } catch {
+        // Bỏ qua khi trình duyệt chặn sessionStorage
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, createdContract]);
+
+  // ---- Cảnh báo khi đóng/tải lại tab trình duyệt nếu đang nhập dở ----
+  useEffect(() => {
+    if (!hasUnsavedData) return;
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [hasUnsavedData]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -268,6 +333,11 @@ export const CreateContractPage: React.FC = () => {
     }
 
     setCreatedContract(contract);
+    try {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+    } catch {
+      // Bỏ qua lỗi sessionStorage
+    }
     const queued = itemsRef.current
       .filter((item) => item.status === 'pending' || item.status === 'failed')
       .map((item) => item.localId);
@@ -339,6 +409,11 @@ export const CreateContractPage: React.FC = () => {
   };
 
   const handleCreateAnother = () => {
+    try {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+    } catch {
+      // Bỏ qua lỗi sessionStorage
+    }
     reset(CREATE_CONTRACT_DEFAULT_VALUES);
     commitItems([]);
     setRejectedMessages([]);
@@ -346,6 +421,29 @@ export const CreateContractPage: React.FC = () => {
     setFormError(null);
     setPhase('editing');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCancelClick = () => {
+    if (hasUnsavedData) {
+      setShowCancelModal(true);
+      return;
+    }
+    try {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+    } catch {
+      // Bỏ qua lỗi sessionStorage
+    }
+    navigate('/');
+  };
+
+  const handleConfirmDiscard = () => {
+    try {
+      sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+    } catch {
+      // Bỏ qua lỗi sessionStorage
+    }
+    setShowCancelModal(false);
+    navigate('/');
   };
 
   const uploadedCount = items.filter((x) => x.status === 'uploaded').length;
@@ -357,27 +455,19 @@ export const CreateContractPage: React.FC = () => {
       id={FORM_ID}
       noValidate
       onSubmit={handleSubmit(onSubmit, onInvalid)}
-      className="space-y-6"
+      className="space-y-4"
     >
       {/* Page Header */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-[26px] font-bold tracking-tight text-slate-900">
-              Tạo hợp đồng mới
-            </h1>
-            <Badge variant="Draft">Bản nháp • Draft</Badge>
-          </div>
-          <p className="mt-1 text-sm text-slate-500">
-            Khởi tạo hồ sơ hợp đồng ở trạng thái Bản nháp (Draft) trước khi
-            trình duyệt.
-          </p>
+      <div>
+        <div className="flex items-center gap-2.5">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            Tạo hợp đồng mới
+          </h1>
+          <Badge variant="Draft">Bản nháp</Badge>
         </div>
-
-        <Button variant="secondary" onClick={() => navigate('/')}>
-          <ArrowLeft className="h-4 w-4" />
-          <span>Quay lại</span>
-        </Button>
+        <p className="mt-0.5 text-xs text-slate-500">
+          Khởi tạo hồ sơ hợp đồng ở trạng thái Bản nháp trước khi trình duyệt.
+        </p>
       </div>
 
       {/* Banner trạng thái */}
@@ -409,31 +499,24 @@ export const CreateContractPage: React.FC = () => {
           data-testid="save-success-banner"
         >
           {uploadedCount > 0
-            ? `Hợp đồng ở trạng thái Draft và đã liên kết ${uploadedCount} tệp đính kèm.`
-            : 'Hợp đồng ở trạng thái Draft, chưa có tệp đính kèm. Cần bổ sung ít nhất 1 tệp trước khi gửi duyệt.'}
+            ? `Hợp đồng ở trạng thái Bản nháp và đã liên kết ${uploadedCount} tệp đính kèm.`
+            : 'Hợp đồng ở trạng thái Bản nháp, chưa có tệp đính kèm. Cần bổ sung ít nhất 1 tệp trước khi gửi duyệt.'}
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_376px]">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-[minmax(0,1fr)_376px] items-start">
         {/* Cột trái: thông tin & điều khoản */}
-        <fieldset disabled={isFormLocked} className="min-w-0 space-y-6">
+        <fieldset disabled={isFormLocked} className="min-w-0 space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Thông tin hợp đồng</CardTitle>
+            <CardHeader className="flex flex-col gap-1.5 pb-3 sm:flex-row sm:items-center sm:justify-between">
+              <CardTitle className="text-base">Thông tin hợp đồng</CardTitle>
+              <span className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 whitespace-nowrap">
+                {createdContract
+                  ? `Mã HĐ: ${createdContract.contractCode} • Người tạo: Nguyễn Văn An (NV-KD-001)`
+                  : 'Mã HĐ: Tự động cấp khi lưu • Người tạo: Nguyễn Văn An (NV-KD-001)'}
+              </span>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="contractCode">Mã hợp đồng</Label>
-                <ReadonlyField
-                  id="contractCode"
-                  value={
-                    createdContract?.contractCode ??
-                    'Tự động sinh sau khi lưu (VD: HD-2026-xxx)'
-                  }
-                  highlight={createdContract !== null}
-                />
-              </div>
-
+            <CardContent className="space-y-3.5">
               <div>
                 <Label htmlFor="contractName" requiredMarker>
                   Tên hợp đồng
@@ -489,7 +572,7 @@ export const CreateContractPage: React.FC = () => {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="grid grid-cols-1 gap-3.5 md:grid-cols-3">
                 <div>
                   <Label htmlFor="effectiveFrom" requiredMarker>
                     Hiệu lực từ
@@ -529,8 +612,8 @@ export const CreateContractPage: React.FC = () => {
                         <Input
                           id="contractValue"
                           inputMode="decimal"
-                          placeholder="VD: 125000000,50"
-                          className="pr-8"
+                          placeholder="VD: 125000000"
+                          className="pr-10"
                           hasError={!!errors.contractValue}
                           aria-invalid={!!errors.contractValue}
                           name={field.name}
@@ -546,33 +629,24 @@ export const CreateContractPage: React.FC = () => {
                     )}
                   />
                   <FieldError message={errors.contractValue?.message} />
-                  <p className="mt-1 text-xs text-slate-500">
-                    Không dùng dấu phân nhóm. Dùng dấu phẩy hoặc chấm cho tối đa 2 chữ số thập phân.
-                  </p>
                 </div>
-              </div>
-
-              <div>
-                <Label htmlFor="createdBy">Người tạo hồ sơ</Label>
-                <ReadonlyField
-                  id="createdBy"
-                  value={`${createdContract?.createdBy ?? DEMO_CREATED_BY} (Phòng Kinh doanh) • Danh tính Demo Backend`}
-                />
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Điều khoản hợp đồng</CardTitle>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">Điều khoản hợp đồng</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3.5">
               <div>
                 <Label htmlFor="paymentTerms" requiredMarker>
                   Điều khoản thanh toán
                 </Label>
                 <Textarea
                   id="paymentTerms"
+                  rows={3}
+                  className="min-h-[72px]"
                   placeholder="VD: Thanh toán bằng chuyển khoản trong vòng 30 ngày kể từ ngày nhận đầy đủ hóa đơn và chứng từ hợp lệ."
                   hasError={!!errors.paymentTerms}
                   aria-invalid={!!errors.paymentTerms}
@@ -586,6 +660,8 @@ export const CreateContractPage: React.FC = () => {
                 </Label>
                 <Textarea
                   id="serviceTerms"
+                  rows={3}
+                  className="min-h-[72px]"
                   placeholder="VD: Cung cấp dịch vụ xếp dỡ, nâng hạ container và lưu kho theo bảng giá đã thỏa thuận."
                   hasError={!!errors.serviceTerms}
                   aria-invalid={!!errors.serviceTerms}
@@ -597,11 +673,11 @@ export const CreateContractPage: React.FC = () => {
           </Card>
         </fieldset>
 
-        {/* Cột phải: tệp đính kèm & trạng thái hồ sơ */}
-        <div className="min-w-0 space-y-6">
+        {/* Cột phải: tệp đính kèm */}
+        <div className="min-w-0 lg:sticky lg:top-6">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Tệp đính kèm</CardTitle>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">Tệp đính kèm</CardTitle>
               <CardDescription>Tùy chọn khi lưu nháp</CardDescription>
             </CardHeader>
             <CardContent>
@@ -616,57 +692,11 @@ export const CreateContractPage: React.FC = () => {
               />
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Trạng thái hồ sơ</CardTitle>
-              <div className="pt-2">
-                <Badge variant="Draft">Bản nháp (Draft)</Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <ol className="space-y-4">
-                <ProgressStep
-                  index={1}
-                  done={createdContract !== null}
-                  active={phase === 'saving'}
-                  title={
-                    createdContract
-                      ? 'Đã lưu thông tin hợp đồng'
-                      : 'Lưu thông tin hợp đồng'
-                  }
-                  description={
-                    createdContract
-                      ? `Đã cấp mã ${createdContract.contractCode}.`
-                      : 'Hệ thống cấp Mã hợp đồng trước.'
-                  }
-                />
-                <ProgressStep
-                  index={2}
-                  done={phase === 'completed'}
-                  active={phase === 'uploading'}
-                  warning={phase === 'partial'}
-                  title="Tự động tải tệp đính kèm"
-                  description={
-                    phase === 'partial'
-                      ? failedCount > 0
-                        ? `Có ${failedCount} tệp lỗi. Chỉ cần tải lại tệp, không tạo lại hợp đồng.`
-                        : `Còn ${pendingCount} tệp chưa tải lên.`
-                      : phase === 'completed'
-                        ? uploadedCount > 0
-                          ? `Đã liên kết ${uploadedCount} tệp vào hợp đồng.`
-                          : 'Không có tệp đính kèm.'
-                        : 'Liên kết các tệp vào hợp đồng vừa tạo.'
-                  }
-                />
-              </ol>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
       {/* Thanh hành động cố định cuối trang */}
-      <div className="sticky bottom-0 z-10 -mx-6 -mb-6 flex flex-col gap-3 border-t border-[#E2E8F0] bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="sticky bottom-0 z-10 -mx-6 -mb-4 flex flex-col gap-3 border-t border-[#E2E8F0] bg-white px-6 py-3.5 sm:flex-row sm:items-center sm:justify-between">
         <p className="flex items-center gap-2 text-sm text-slate-500">
           {createdContract ? (
             <>
@@ -688,7 +718,7 @@ export const CreateContractPage: React.FC = () => {
             <>
               <Button
                 variant="secondary"
-                onClick={() => navigate('/')}
+                onClick={handleCancelClick}
                 disabled={isBusy}
               >
                 Hủy
@@ -735,6 +765,53 @@ export const CreateContractPage: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Modal xác nhận hủy khi có dữ liệu nhập dở */}
+      {showCancelModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cancel-draft-dialog-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-[1px]"
+        >
+          <div className="w-full max-w-md rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-xl">
+            <div className="flex items-start gap-3.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-50 text-[#D97706]">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2
+                  id="cancel-draft-dialog-title"
+                  className="text-base font-bold text-slate-900"
+                >
+                  Xác nhận hủy nội dung đang nhập
+                </h2>
+                <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
+                  Bạn có thông tin hợp đồng chưa lưu. Bạn có chắc chắn muốn hủy
+                  bỏ nội dung đang nhập không?
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-center justify-end gap-2.5">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => setShowCancelModal(false)}
+              >
+                Tiếp tục soạn thảo
+              </Button>
+              <Button
+                type="button"
+                className="bg-[#DC2626] text-white hover:bg-red-700"
+                onClick={handleConfirmDiscard}
+              >
+                Hủy bỏ nội dung
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </form>
   );
 };
@@ -749,26 +826,6 @@ const FieldError: React.FC<{ message?: string }> = ({ message }) =>
       {message}
     </p>
   ) : null;
-
-const ReadonlyField: React.FC<{
-  id: string;
-  value: string;
-  highlight?: boolean;
-}> = ({ id, value, highlight = false }) => (
-  <div className="relative">
-    <input
-      id={id}
-      readOnly
-      tabIndex={-1}
-      value={value}
-      className={cn(
-        'flex h-10 w-full cursor-default rounded-lg border border-[#E2E8F0] bg-slate-100/70 px-3.5 pr-10 text-sm',
-        highlight ? 'font-semibold text-slate-900' : 'text-slate-500'
-      )}
-    />
-    <Lock className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-  </div>
-);
 
 const CustomerSummary: React.FC<{ customer: Customer }> = ({ customer }) => (
   <div className="mt-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] p-3.5">
@@ -799,32 +856,4 @@ const SummaryItem: React.FC<{ label: string; value?: string }> = ({
     <dt className="shrink-0 text-slate-500">{label}:</dt>
     <dd className="font-medium text-slate-800">{value || '—'}</dd>
   </div>
-);
-
-const ProgressStep: React.FC<{
-  index: number;
-  title: string;
-  description: string;
-  done?: boolean;
-  active?: boolean;
-  warning?: boolean;
-}> = ({ index, title, description, done, active, warning }) => (
-  <li className="flex gap-3">
-    <span
-      className={cn(
-        'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
-        done
-          ? 'bg-emerald-50 text-[#16A34A]'
-          : warning
-            ? 'bg-amber-50 text-[#D97706]'
-            : 'bg-blue-50 text-[#1D4ED8]'
-      )}
-    >
-      {active ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : index}
-    </span>
-    <div>
-      <p className="text-sm font-semibold text-slate-800">{title}</p>
-      <p className="mt-0.5 text-xs text-slate-500">{description}</p>
-    </div>
-  </li>
 );

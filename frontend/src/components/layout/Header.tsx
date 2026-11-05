@@ -61,20 +61,25 @@ export const Header: React.FC = () => {
   const breadcrumb = getBreadcrumbMeta(location.pathname);
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 w-full items-center justify-between border-b border-[#E2E8F0] bg-[#FFFFFF] px-6">
+    <header className="sticky top-0 z-20 flex h-14 w-full items-center justify-between gap-4 border-b border-[#E2E8F0] bg-[#FFFFFF] px-6">
       {/* Dynamic Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs">
+      <nav
+        aria-label="Breadcrumb"
+        className="flex items-center gap-2 text-xs whitespace-nowrap"
+      >
         <Link
           to="/"
-          className="flex h-7 w-7 items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
           title="Về trang chủ"
         >
           <Home className="h-4 w-4" />
         </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-slate-300" />
-        <span className="font-medium text-slate-500">{breadcrumb.section}</span>
+        <ChevronRight className="h-3.5 w-3.5 shrink-0 text-slate-300" />
+        <span className="font-medium text-slate-500 whitespace-nowrap">
+          {breadcrumb.section}
+        </span>
         <span className="text-slate-300">/</span>
-        <span className="font-semibold text-slate-700">
+        <span className="font-semibold text-slate-700 whitespace-nowrap">
           {breadcrumb.current}
         </span>
       </nav>
@@ -85,25 +90,17 @@ export const Header: React.FC = () => {
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
             type="search"
-            placeholder="Tìm kiếm nhanh mã hợp đồng, khách hàng..."
-            className="h-9 w-full rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] pl-9 pr-12 text-xs text-slate-800 placeholder:text-slate-400 focus:border-[#1D4ED8] focus:bg-white focus:outline-none"
+            placeholder="Tìm kiếm mã hợp đồng, khách hàng..."
+            className="h-9 w-full rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] pl-9 pr-3 text-xs text-slate-800 placeholder:text-slate-400 focus:border-[#1D4ED8] focus:bg-white focus:outline-none"
           />
-          <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-400">
-            ⌘ K
-          </kbd>
         </div>
       </div>
 
-      {/* Right Status Badge, Notification & Demo User Info */}
-      <div className="flex items-center gap-3">
-        <span className="hidden xl:inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-semibold text-[#1D4ED8]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#16A34A]" />
-          Sprint 01 • PB-01
-        </span>
-
+      {/* Right Notification & Demo User Info */}
+      <div className="flex items-center gap-3 shrink-0 whitespace-nowrap">
         <button
           type="button"
-          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors cursor-pointer"
+          className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors cursor-pointer"
           aria-label="Thông báo hệ thống"
         >
           <Bell className="h-4 w-4" />
@@ -113,21 +110,21 @@ export const Header: React.FC = () => {
         <div className="h-6 w-px bg-[#E2E8F0]" />
 
         <div
-          className="flex items-center gap-2.5 rounded-lg py-1 pl-1 pr-2"
+          className="flex items-center gap-2.5 rounded-lg py-1 pl-1 pr-2 whitespace-nowrap"
           data-testid="header-user-profile"
         >
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-[#1D4ED8]">
             AN
           </div>
-          <div className="text-left">
-            <div className="text-xs font-bold text-slate-900 leading-tight">
+          <div className="text-left whitespace-nowrap">
+            <div className="text-xs font-bold text-slate-900 leading-tight whitespace-nowrap">
               Nguyễn Văn An
             </div>
-            <div className="text-[11px] text-slate-500 leading-tight">
+            <div className="text-[11px] text-slate-500 leading-tight whitespace-nowrap">
               Chuyên viên Kinh doanh (NV-KD-001)
             </div>
           </div>
-          <ChevronDown className="ml-1 h-3.5 w-3.5 text-slate-400" />
+          <ChevronDown className="ml-1 h-3.5 w-3.5 shrink-0 text-slate-400" />
         </div>
       </div>
     </header>

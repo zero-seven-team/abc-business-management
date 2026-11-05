@@ -4,20 +4,20 @@ import { cn } from '@/lib/utils';
 import type { ContractStatus } from '@/types/contract';
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold transition-colors',
+  'inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-medium transition-colors',
   {
     variants: {
       variant: {
-        default: 'bg-blue-50 text-[#1D4ED8]',
-        Draft: 'bg-slate-100 text-slate-600',
-        InReview: 'bg-amber-50 text-[#D97706]',
-        UnderReview: 'bg-sky-50 text-[#0284C7]',
-        Approved: 'bg-emerald-50 text-[#16A34A]',
-        Active: 'bg-green-50 text-[#16A34A]',
-        NeedsRevision: 'bg-amber-50 text-[#D97706]',
-        Rejected: 'bg-red-50 text-[#DC2626]',
-        ESign: 'bg-violet-50 text-[#7C3AED]',
-        Issued: 'bg-sky-50 text-[#0284C7]',
+        default: 'bg-blue-50 text-blue-700',
+        Draft: 'bg-slate-100 text-slate-700',
+        InReview: 'bg-amber-50 text-amber-800',
+        UnderReview: 'bg-sky-50 text-sky-800',
+        Approved: 'bg-emerald-50 text-emerald-800',
+        Active: 'bg-green-50 text-green-800',
+        NeedsRevision: 'bg-rose-50 text-rose-700',
+        Rejected: 'bg-red-50 text-red-700',
+        ESign: 'bg-violet-50 text-violet-800',
+        Issued: 'bg-sky-50 text-sky-800',
       },
     },
     defaultVariants: {

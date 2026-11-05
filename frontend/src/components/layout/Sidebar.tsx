@@ -15,7 +15,6 @@ import {
   Settings,
   ChevronDown,
   Box,
-  Sparkles,
   Building2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -53,7 +52,7 @@ export const Sidebar: React.FC = () => {
             Không gian làm việc
           </div>
 
-          <nav className="space-y-0.5">
+          <nav className="sidebar-scroll space-y-0.5">
             {/* Trang chủ - Tổng quan công việc */}
             <NavLink
               to="/"
@@ -184,20 +183,15 @@ export const Sidebar: React.FC = () => {
               to="/approvals"
               className={({ isActive }) =>
                 cn(
-                  'flex items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1D4ED8] text-white font-semibold'
                     : 'text-slate-300 hover:bg-slate-800/70 hover:text-white'
                 )
               }
             >
-              <span className="flex items-center gap-2.5">
-                <CheckSquare className="h-4 w-4 shrink-0" />
-                <span>Phê duyệt</span>
-              </span>
-              <span className="inline-flex h-4.5 min-w-[20px] items-center justify-center rounded-md bg-[#DC2626] px-1.5 text-[10px] font-bold text-white">
-                8
-              </span>
+              <CheckSquare className="h-4 w-4 shrink-0" />
+              <span>Phê duyệt</span>
             </NavLink>
 
             {/* Ký điện tử */}
@@ -284,28 +278,16 @@ export const Sidebar: React.FC = () => {
         </div>
       </div>
 
-      {/* Department & Footer Info */}
-      <div className="shrink-0 border-t border-slate-800/80 p-2.5 space-y-2">
+      {/* Department Info */}
+      <div className="shrink-0 border-t border-slate-800/80 p-2.5">
         <div className="flex items-center justify-between rounded-lg bg-slate-800/80 px-2.5 py-1.5">
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
-            <Sparkles className="h-3.5 w-3.5 text-violet-400" />
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-200 whitespace-nowrap">
+            <Building2 className="h-3.5 w-3.5 shrink-0 text-blue-400" />
             <span>Phòng Kinh doanh - B2B</span>
           </div>
-          <span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[10px] font-bold text-violet-300">
+          <span className="rounded bg-blue-500/20 px-1.5 py-0.5 text-[10px] font-bold text-blue-300">
             KD
           </span>
-        </div>
-
-        <div className="flex items-center gap-2 px-1">
-          <Building2 className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-          <div className="min-w-0">
-            <div className="truncate text-[11px] font-medium text-slate-300">
-              Công ty ABC Logistics
-            </div>
-            <div className="truncate text-[10px] text-slate-500">
-              Hệ thống nghiệp vụ • v2.6.0
-            </div>
-          </div>
         </div>
       </div>
     </aside>

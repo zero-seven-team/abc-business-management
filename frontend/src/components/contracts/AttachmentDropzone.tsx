@@ -95,7 +95,9 @@ export const AttachmentDropzone: React.FC<AttachmentDropzoneProps> = ({
         )}
       >
         <UploadCloud className="h-6 w-6" />
-        <p className="text-sm font-semibold">Kéo thả hoặc chọn NHIỀU TỆP</p>
+        <p className="text-sm font-semibold">
+          Kéo thả tệp vào đây hoặc bấm để chọn tệp
+        </p>
         <p className="text-xs text-slate-500">
           PDF, DOCX, XLSX • Tối đa 20 MB/tệp
         </p>
@@ -114,8 +116,8 @@ export const AttachmentDropzone: React.FC<AttachmentDropzoneProps> = ({
       </div>
 
       <p className="text-xs leading-relaxed text-slate-500">
-        Cho phép lưu Bản nháp khi chưa có tệp. Bắt buộc có ít nhất 1 tệp khi
-        Gửi duyệt (CTR-02).
+        Cho phép lưu Bản nháp khi chưa có tệp. Bắt buộc đính kèm ít nhất 1 tệp
+        trước khi trình duyệt.
       </p>
 
       {rejectedMessages.length > 0 && (

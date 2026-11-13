@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Plus,
@@ -21,6 +21,24 @@ import { Badge, CONTRACT_STATUS_LABELS } from '@/components/ui/badge';
 import { formatCurrencyVND } from '@/lib/utils';
 import { loadRecentCreatedContracts } from '@/services/contractService';
 import type { ContractStatus } from '@/types/contract';
+
+const VIETNAMESE_WEEKDAYS = [
+  'Chủ Nhật',
+  'Thứ Hai',
+  'Thứ Ba',
+  'Thứ Tư',
+  'Thứ Năm',
+  'Thứ Sáu',
+  'Thứ Bảy',
+] as const;
+
+function formatVietnameseCurrentDate(date: Date): string {
+  const weekday = VIETNAMESE_WEEKDAYS[date.getDay()];
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${weekday}, ${day} tháng ${month} năm ${year}`;
+}
 
 interface RecentRecordItem {
   code: string;
@@ -163,6 +181,14 @@ export const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const [rightTab, setRightTab] = useState<'priority' | 'reminders'>('priority');
   const [statusFilter, setStatusFilter] = useState<QuickStatusFilter>('ALL');
+  const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCurrentDate(new Date());
+    }, 30_000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const sessionContracts = loadRecentCreatedContracts();
   const recentCreatedRecords: RecentRecordItem[] = sessionContracts.map((item) => {
@@ -187,7 +213,8 @@ export const DashboardPage: React.FC = () => {
     ),
   ];
 
-  const draftCount = 4 + recentCreatedRecords.filter((r) => r.status === 'Draft').length;
+  const draftCount = allRecords.filter((r) => r.status === 'Draft').length;
+  const esignCount = allRecords.filter((r) => r.status === 'ESign').length;
 
   const filteredRecords = allRecords.filter((record) => {
     if (statusFilter === 'ALL') return true;
@@ -203,7 +230,9 @@ export const DashboardPage: React.FC = () => {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="inline-flex items-center gap-2 text-sm font-medium text-slate-600">
           <Calendar className="h-4 w-4 text-[#1D4ED8]" />
-          <span>Thứ Ba, 03 tháng 11 năm 2026</span>
+          <span data-testid="dashboard-current-date">
+            {formatVietnameseCurrentDate(currentDate)}
+          </span>
         </div>
 
         <Button
@@ -229,7 +258,7 @@ export const DashboardPage: React.FC = () => {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-2">
             <span className="text-2xl font-bold tracking-tight text-slate-900">
-              03
+              {String(PRIORITY_TASKS.length).padStart(2, '0')}
             </span>
             <span className="text-xs text-slate-500 whitespace-nowrap">
               Cần ưu tiên hôm nay
@@ -267,7 +296,7 @@ export const DashboardPage: React.FC = () => {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-2">
             <span className="text-2xl font-bold tracking-tight text-slate-900">
-              05
+              {String(EXPIRING_REMINDERS.length).padStart(2, '0')}
             </span>
             <span className="text-xs text-slate-500 whitespace-nowrap">
               Trong 30 ngày tới
@@ -286,7 +315,7 @@ export const DashboardPage: React.FC = () => {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-2">
             <span className="text-2xl font-bold tracking-tight text-slate-900">
-              03
+              {String(esignCount).padStart(2, '0')}
             </span>
             <span className="text-xs text-slate-500 whitespace-nowrap">
               Chờ hoàn tất ký số

@@ -16,16 +16,10 @@ import {
   ChevronDown,
   Box,
   Building2,
-  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface SidebarProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
+export const Sidebar: React.FC = () => {
   const location = useLocation();
   const isContractSection = location.pathname.startsWith('/contracts');
   const [contractsOpen, setContractsOpen] = useState<boolean>(true);
@@ -33,11 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
 
   return (
     <aside
-      id="main-sidebar"
-      className={cn(
-        'fixed inset-y-0 left-0 z-40 w-[240px] shrink-0 flex-col bg-[#0F172A] text-slate-300 select-none lg:flex',
-        open ? 'flex' : 'hidden'
-      )}
+      className="fixed inset-y-0 left-0 z-30 flex w-[240px] shrink-0 flex-col bg-[#0F172A] text-slate-300 select-none"
       aria-label="Thanh điều hướng chính"
     >
       {/* Brand Logo */}
@@ -53,14 +43,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
             Quản trị Kinh doanh
           </div>
         </div>
-        <button
-          type="button"
-          aria-label="Đóng menu"
-          className="rounded-md p-1 text-slate-300 hover:bg-slate-800 lg:hidden"
-          onClick={onClose}
-        >
-          <X className="h-4 w-4" />
-        </button>
       </div>
 
       {/* Navigation */}
@@ -70,12 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
             Không gian làm việc
           </div>
 
-          <nav
-            className="sidebar-scroll space-y-0.5"
-            onClick={(event) => {
-              if ((event.target as HTMLElement).closest('a')) onClose();
-            }}
-          >
+          <nav className="sidebar-scroll space-y-0.5">
             {/* Trang chủ - Tổng quan công việc */}
             <NavLink
               to="/"

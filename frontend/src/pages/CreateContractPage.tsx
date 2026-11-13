@@ -508,9 +508,9 @@ export const CreateContractPage: React.FC = () => {
         {/* Cột trái: thông tin & điều khoản */}
         <fieldset disabled={isFormLocked} className="min-w-0 space-y-4">
           <Card>
-            <CardHeader className="flex flex-col flex-wrap gap-1.5 pb-3 sm:flex-row sm:items-center sm:justify-between">
+            <CardHeader className="flex flex-col gap-1.5 pb-3 sm:flex-row sm:items-center sm:justify-between">
               <CardTitle className="text-base">Thông tin hợp đồng</CardTitle>
-              <span className="max-w-full rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+              <span className="rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 whitespace-nowrap">
                 {createdContract
                   ? `Mã HĐ: ${createdContract.contractCode} • Người tạo: Nguyễn Văn An (NV-KD-001)`
                   : 'Mã HĐ: Tự động cấp khi lưu • Người tạo: Nguyễn Văn An (NV-KD-001)'}
@@ -696,7 +696,7 @@ export const CreateContractPage: React.FC = () => {
       </div>
 
       {/* Thanh hành động cố định cuối trang */}
-      <div className="sticky bottom-0 z-10 -mx-4 -mb-4 flex flex-col gap-3 border-t border-[#E2E8F0] bg-white px-4 py-3.5 sm:-mx-6 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+      <div className="sticky bottom-0 z-10 -mx-6 -mb-4 flex flex-col gap-3 border-t border-[#E2E8F0] bg-white px-6 py-3.5 sm:flex-row sm:items-center sm:justify-between">
         <p className="flex items-center gap-2 text-sm text-slate-500">
           {createdContract ? (
             <>

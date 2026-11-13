@@ -6,6 +6,7 @@ import {
   Search,
   Bell,
   ChevronDown,
+  Menu,
 } from 'lucide-react';
 
 interface BreadcrumbMeta {
@@ -56,16 +57,31 @@ function getBreadcrumbMeta(pathname: string): BreadcrumbMeta {
   };
 }
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  sidebarOpen: boolean;
+  onOpenMenu: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ sidebarOpen, onOpenMenu }) => {
   const location = useLocation();
   const breadcrumb = getBreadcrumbMeta(location.pathname);
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 w-full items-center justify-between gap-4 border-b border-[#E2E8F0] bg-[#FFFFFF] px-6">
+    <header className="sticky top-0 z-20 flex h-14 w-full min-w-0 items-center justify-between gap-2 border-b border-[#E2E8F0] bg-[#FFFFFF] px-4 sm:gap-4 sm:px-6">
+      <button
+        type="button"
+        aria-label="Mở menu"
+        aria-controls="main-sidebar"
+        aria-expanded={sidebarOpen}
+        onClick={onOpenMenu}
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
       {/* Dynamic Breadcrumb */}
       <nav
         aria-label="Breadcrumb"
-        className="flex items-center gap-2 text-xs whitespace-nowrap"
+        className="flex min-w-0 flex-1 items-center gap-2 text-xs"
       >
         <Link
           to="/"
@@ -75,17 +91,17 @@ export const Header: React.FC = () => {
           <Home className="h-4 w-4" />
         </Link>
         <ChevronRight className="h-3.5 w-3.5 shrink-0 text-slate-300" />
-        <span className="font-medium text-slate-500 whitespace-nowrap">
+        <span className="hidden font-medium text-slate-500 whitespace-nowrap xl:inline">
           {breadcrumb.section}
         </span>
-        <span className="text-slate-300">/</span>
-        <span className="font-semibold text-slate-700 whitespace-nowrap">
+        <span className="hidden text-slate-300 xl:inline">/</span>
+        <span className="truncate font-semibold text-slate-700">
           {breadcrumb.current}
         </span>
       </nav>
 
       {/* Center Search Bar */}
-      <div className="hidden md:flex items-center w-80 lg:w-96">
+      <div className="hidden w-56 shrink-0 items-center xl:flex 2xl:w-80">
         <div className="relative w-full">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
@@ -97,7 +113,7 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Right Notification & Demo User Info */}
-      <div className="flex items-center gap-3 shrink-0 whitespace-nowrap">
+      <div className="flex shrink-0 items-center gap-1 whitespace-nowrap sm:gap-3">
         <button
           type="button"
           className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors cursor-pointer"
@@ -116,7 +132,7 @@ export const Header: React.FC = () => {
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-[#1D4ED8]">
             AN
           </div>
-          <div className="text-left whitespace-nowrap">
+          <div className="hidden text-left whitespace-nowrap xl:block">
             <div className="text-xs font-bold text-slate-900 leading-tight whitespace-nowrap">
               Nguyễn Văn An
             </div>

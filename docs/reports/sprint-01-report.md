@@ -7,7 +7,7 @@
 | **Thuộc giai đoạn** | **Sprint 01** (Khởi tạo nền tảng kiến trúc & Hiện thực hóa `PB-01`) |
 | **Hạng mục Product Backlog** | `PB-01` - Tạo và lưu hợp đồng mới ở trạng thái `Draft` |
 | **Điểm độ phức tạp (Story Points)** | **8 SP** |
-| **Tổng khối lượng công việc** | **19 Tasks** (`TASK-01` đến `TASK-19`) - **97 giờ công (97h)** |
+| **Tổng khối lượng công việc** | **19 Tasks** (`TASK-01` đến `TASK-19`) - **99 giờ công (99h)** |
 | **Liên kết GitHub Issues** | Issue cha `#1` (`PB-01`), các Issue công việc `#2` đến `#20` (`TASK-01..TASK-19`) |
 | **Người lập báo cáo** | Nguyễn Khả Như (`KN12345N`) - Phân tích Nghiệp vụ (BA) & Quản lý Dự án (PM) |
 | **Trạng thái Sprint** | **HOÀN THÀNH 100% (19/19 Tasks - 8/8 Story Points)** |
@@ -31,28 +31,28 @@ Sprint 01 là chặng mở đầu của lộ trình 8 Sprints trong dự án **A
 
 Toàn bộ 19 công việc của Sprint 01 đã được triển khai theo 6 chặng tuần tự - song song, gắn kết trực tiếp với 19 Issues trên GitHub (`#2` đến `#20`, thuộc Issue cha `#1`):
 
-| Mã Task | GitHub Issue | Tên công việc chi tiết | Phụ trách | Chặng | Giờ ước lượng | Giờ thực tế | Trạng thái | Sản phẩm bàn giao chính (Deliverables) |
-| :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| `TASK-01` | `#2` | Thiết lập cấu trúc GitHub Repository, nhánh làm việc, `.gitignore` và bảng theo dõi công việc Sprint 01 | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 1 | 4h | 4h | **Done** | Cấu trúc repo, `.gitignore`, 20 GitHub Issues (`#1..#20`) |
-| `TASK-02` | `#3` | Phân tích chi tiết User Story `PB-01`, quy tắc nghiệp vụ (`BR-01..BR-06`) và chốt API Contract | Nguyễn Khả Như (`KN12345N`) | Chặng 1 | 4h | 4h | **Done** | `docs/specs/PB-01-create-contract-spec.md` |
-| `TASK-03` | `#4` | Thiết kế mô hình Use Case UML và đặc tả kịch bản sử dụng cho chức năng tạo hợp đồng `Draft` | Nguyễn Khả Như (`KN12345N`) | Chặng 2 | 5h | 5h | **Done** | `docs/uml/use-case-PB01.md` |
-| `TASK-04` | `#5` | Khởi tạo Solution Backend .NET 10 Web API phân lớp (`Domain`, `Application`, `Infrastructure`, `Api`), cấu hình PostgreSQL, CORS & Swagger | Lê Quang Linh (`linh285`) | Chặng 1 | 8h | 8h | **Done** | `backend/AbcBusinessManagement.sln` và 4 projects cốt lõi |
-| `TASK-05` | `#6` | Thiết kế thực thể (`Customer`, `Contract`, `ContractAttachment`), cấu hình EF Core, tạo Migration và nạp dữ liệu khách hàng mẫu (Seed Data) | Lê Quang Linh (`linh285`) | Chặng 2 | 8h | 8h | **Done** | `ApplicationDbContext`, Migration `InitContractDraftSchema`, Seed 3 KH, `Infrastructure.Tests` (15 tests) |
-| `TASK-06` | `#7` | Xây dựng Middleware xử lý lỗi tập trung chuẩn RFC 7807 (`ProblemDetails` / `ValidationProblemDetails`) và Request Logging có `traceId` | Lê Quang Linh (`linh285`) | Chặng 2 | 3h | 3h | **Done** | `GlobalExceptionHandler.cs`, `RequestLoggingMiddleware.cs`, `Api.Tests` (13 tests) |
-| `TASK-07` | `#8` | Thiết kế sơ đồ Lớp (Class Diagram) và sơ đồ Tuần tự (Sequence Diagrams) cho luồng tạo hợp đồng 2 bước | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 6h | 6h | **Done** | `docs/uml/class-sequence-PB01.md` |
-| `TASK-08` | `#9` | Hiện thực hóa API Tạo hợp đồng `Draft` (`POST /api/contracts`) và Xem chi tiết (`GET /api/contracts/{id}`), sinh mã `HD-YYYY-NNN` + retry 3 lần | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 8h | 8h | **Done** | `ContractsController.cs`, `ContractService.cs`, `CreateContractValidator.cs`, `AuditConstants.cs` |
-| `TASK-09` | `#10` | Hiện thực hóa API Lấy danh sách khách hàng (`GET /api/customers`) và Tải tệp đính kèm (`POST /api/contracts/{id}/attachments`) | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 5h | 5h | **Done** | `CustomersController.cs`, `CustomerService.cs`, `ContractAttachmentService.cs` |
-| `TASK-10` | `#11` | Thiết kế giao diện Figma 6 màn hình của Sprint 01 và lập tài liệu đặc tả UI/UX Design Spec | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 2 | 6h | 6h | **Done** | `docs/design/sprint-01/01_..06_.png`, `UI-UX-Design-Spec-PB01.md` |
-| `TASK-11` | `#12` | Khởi tạo dự án Frontend (`React + TypeScript + Vite + Tailwind CSS + shadcn/ui`), xây dựng khung App Shell (`Sidebar 240px`, `Header 64px`, `Dashboard`) | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 1 | 4h | 4h | **Done** | `frontend/` App Shell, `Sidebar.tsx`, `Header.tsx`, `DashboardPage.tsx` |
-| `TASK-12` | `#13` | Xây dựng màn hình Tạo hợp đồng mới (`CreateContractPage`), tích hợp API, kiểm tra dữ liệu bằng Zod và quy trình lưu 2 bước + nút **"Thử tải lại tệp"** | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 4 | 9h | 9h | **Done** | `CreateContractPage.tsx`, `AttachmentDropzone.tsx`, `contractSchema.ts`, `contractService.ts`, `contractSchema.test.cjs` |
-| `TASK-13` | `#14` | Thiết kế bộ kịch bản kiểm thử chi tiết (`Test Cases Specification`) bao phủ `AC-01..AC-08` và `BR-01..BR-06` | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 2 | 5h | 5h | **Done** | `docs/testing/test-cases-PB01.md` |
-| `TASK-14` | `#15` | Viết Unit Tests (`24 tests`) và Integration Tests (`26 tests` với PostgreSQL thật) cho toàn bộ nghiệp vụ và API của `PB-01` | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 4 | 6h | 6h | **Done** | `tests/backend/AbcBusinessManagement.UnitTests/`, `tests/backend/AbcBusinessManagement.IntegrationTests/` |
-| `TASK-15` | `#16` | Thiết lập GitHub Actions CI Workflow tự động build và chạy kiểm thử Backend (.NET 10 + PostgreSQL) & Frontend (Vite + Node 22) | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 2 & 4 | 4h | 4h | **Done** | `.github/workflows/ci.yml` |
-| `TASK-16` | `#17` | Thực hiện kiểm thử End-to-End (E2E), kiểm tra tính bền vững dữ liệu sau khi khởi động lại dịch vụ và lập Báo cáo kiểm thử Sprint 01 | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 5 | 4h | 4h | **Done** | `docs/testing/test-report-sprint-01.md` |
-| `TASK-17` | `#18` | Biên soạn tài liệu `README.md` hướng dẫn cài đặt môi trường, khởi tạo PostgreSQL, chạy Migration/Seed, chạy ứng dụng và chạy bộ kiểm thử | Nguyễn Khả Như (`KN12345N`) | Chặng 4 | 3h | 3h | **Done** | `README.md` |
-| `TASK-18` | `#19` | Tổng hợp kết quả thực hiện và lập Báo cáo Tổng kết Sprint 01 (`Sprint 01 Completion Report`) | Nguyễn Khả Như (`KN12345N`) | Chặng 6 | 4h | 4h | **Done** | `docs/reports/sprint-01-report.md` |
-| `TASK-19` | `#20` | Tổ chức nghiệm thu nội bộ và lập Biên bản họp Sprint Review & Sprint Retrospective cho Sprint 01 | Nguyễn Khả Như (`KN12345N`) | Chặng 6 | 3h | 3h | **Done** | `docs/reports/sprint-01-review-retrospective.md` |
-| **Tổng** | **#1..#20** | **Toàn bộ 19 công việc của Sprint 01 (`PB-01`)** | **5 thành viên** | **6 Chặng** | **97h** | **97h** | **100% Done** | **Đầy đủ tài liệu, mã nguồn FE/BE/DB và bộ kiểm thử tự động** |
+| Mã Task | GitHub Issue | Tên công việc chi tiết | Phụ trách | Chặng | Ngày BĐ thực tế | Ngày KT thực tế | Giờ ước lượng | Giờ thực tế | Trạng thái | Sản phẩm bàn giao chính (Deliverables) |
+| :---: | :---: | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| `TASK-01` | `#2` | Thiết lập cấu trúc GitHub Repository, nhánh làm việc, `.gitignore` và bảng theo dõi công việc Sprint 01 | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 1 | 03/11/2026 | 03/11/2026 | 4h | 4h | **Done** | Cấu trúc repo, `.gitignore`, 20 GitHub Issues (`#1..#20`) |
+| `TASK-02` | `#3` | Phân tích chi tiết User Story `PB-01`, quy tắc nghiệp vụ (`BR-01..BR-06`) và chốt API Contract | Nguyễn Khả Như (`KN12345N`) | Chặng 1 | 03/11/2026 | 03/11/2026 | 4h | 4h | **Done** | `docs/specs/PB-01-create-contract-spec.md` |
+| `TASK-03` | `#4` | Thiết kế mô hình Use Case UML và đặc tả kịch bản sử dụng cho chức năng tạo hợp đồng `Draft` | Nguyễn Khả Như (`KN12345N`) | Chặng 2 | 04/11/2026 | 04/11/2026 | 5h | 5h | **Done** | `docs/uml/use-case-PB01.md` |
+| `TASK-04` | `#5` | Khởi tạo Solution Backend .NET 10 Web API phân lớp (`Domain`, `Application`, `Infrastructure`, `Api`), cấu hình PostgreSQL, CORS & Swagger | Lê Quang Linh (`linh285`) | Chặng 1 | 03/11/2026 | 03/11/2026 | 8h | 8h | **Done** | `backend/AbcBusinessManagement.sln` và 4 projects cốt lõi |
+| `TASK-05` | `#6` | Thiết kế thực thể (`Customer`, `Contract`, `ContractAttachment`), cấu hình EF Core, tạo Migration và nạp dữ liệu khách hàng mẫu (Seed Data) | Lê Quang Linh (`linh285`) | Chặng 2 | 04/11/2026 | 04/11/2026 | 8h | 8h | **Done** | `ApplicationDbContext`, Migration `InitContractDraftSchema`, Seed 3 KH, `Infrastructure.Tests` (15 tests) |
+| `TASK-06` | `#7` | Xây dựng Middleware xử lý lỗi tập trung chuẩn RFC 7807 (`ProblemDetails` / `ValidationProblemDetails`) và Request Logging có `traceId` | Lê Quang Linh (`linh285`) | Chặng 2 | 04/11/2026 | 04/11/2026 | 3h | 3h | **Done** | `GlobalExceptionHandler.cs`, `RequestLoggingMiddleware.cs`, `Api.Tests` (13 tests) |
+| `TASK-07` | `#8` | Thiết kế sơ đồ Lớp (Class Diagram) và sơ đồ Tuần tự (Sequence Diagrams) cho luồng tạo hợp đồng 2 bước | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 04/11/2026 | 04/11/2026 | 6h | 6h | **Done** | `docs/uml/class-sequence-PB01.md` |
+| `TASK-08` | `#9` | Hiện thực hóa API Tạo hợp đồng `Draft` (`POST /api/contracts`) và Xem chi tiết (`GET /api/contracts/{id}`), sinh mã `HD-YYYY-NNN` + retry 3 lần | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 04/11/2026 | 04/11/2026 | 8h | 8h | **Done** | `ContractsController.cs`, `ContractService.cs`, `CreateContractValidator.cs`, `AuditConstants.cs` |
+| `TASK-09` | `#10` | Hiện thực hóa API Lấy danh sách khách hàng (`GET /api/customers`) và Tải tệp đính kèm (`POST /api/contracts/{id}/attachments`) | Thạch Ý (`ThachY-23120411`) | Chặng 3 | 04/11/2026 | 04/11/2026 | 5h | 5h | **Done** | `CustomersController.cs`, `CustomerService.cs`, `ContractAttachmentService.cs` |
+| `TASK-10` | `#11` | Thiết kế giao diện Figma 6 màn hình của Sprint 01 và lập tài liệu đặc tả UI/UX Design Spec | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 2 | 04/11/2026 | 04/11/2026 | 6h | 6h | **Done** | `docs/design/sprint-01/01_..06_.png`, `UI-UX-Design-Spec-PB01.md` |
+| `TASK-11` | `#12` | Khởi tạo dự án Frontend (`React + TypeScript + Vite + Tailwind CSS + shadcn/ui`), xây dựng khung App Shell (`Sidebar 240px`, `Header 64px`, `Dashboard`) | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 1 | 03/11/2026 | 03/11/2026 | 4h | 4h | **Done** | `frontend/` App Shell, `Sidebar.tsx`, `Header.tsx`, `DashboardPage.tsx` |
+| `TASK-12` | `#13` | Xây dựng màn hình Tạo hợp đồng mới (`CreateContractPage`), tích hợp API, kiểm tra dữ liệu bằng Zod và quy trình lưu 2 bước + nút **"Thử tải lại tệp"** | Trần Ngọc Long (`LONGTRAN2700`) | Chặng 4 | 05/11/2026 | 05/11/2026 | 9h | 9h | **Done** | `CreateContractPage.tsx`, `AttachmentDropzone.tsx`, `contractSchema.ts`, `contractService.ts`, `contractSchema.test.cjs` |
+| `TASK-13` | `#14` | Thiết kế bộ kịch bản kiểm thử chi tiết (`Test Cases Specification`) bao phủ `AC-01..AC-08` và `BR-01..BR-06` | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 2 | 04/11/2026 | 04/11/2026 | 5h | 5h | **Done** | `docs/testing/test-cases-PB01.md` |
+| `TASK-14` | `#15` | Viết Unit Tests (`24 tests`) và Integration Tests (`26 tests` với PostgreSQL thật) cho toàn bộ nghiệp vụ và API của `PB-01` | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 4 | 05/11/2026 | 05/11/2026 | 6h | 6h | **Done** | `tests/backend/AbcBusinessManagement.UnitTests/`, `tests/backend/AbcBusinessManagement.IntegrationTests/` |
+| `TASK-15` | `#16` | Thiết lập GitHub Actions CI Workflow tự động build và chạy kiểm thử Backend (.NET 10 + PostgreSQL) & Frontend (Vite + Node 22) | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 2 & 4 | 04/11/2026 | 04/11/2026 | 4h | 4h | **Done** | `.github/workflows/ci.yml` |
+| `TASK-16` | `#17` | Thực hiện kiểm thử End-to-End (E2E), kiểm tra tính bền vững dữ liệu sau khi khởi động lại dịch vụ và lập Báo cáo kiểm thử Sprint 01 | Đặng Hữu Phú (`PhuHuuDang`) | Chặng 5 | 05/11/2026 | 05/11/2026 | 4h | 4h | **Done** | `docs/testing/test-report-sprint-01.md` |
+| `TASK-17` | `#18` | Biên soạn tài liệu `README.md` hướng dẫn cài đặt môi trường, khởi tạo PostgreSQL, chạy Migration/Seed, chạy ứng dụng và chạy bộ kiểm thử | Nguyễn Khả Như (`KN12345N`) | Chặng 4 | 05/11/2026 | 05/11/2026 | 3h | 3h | **Done** | `README.md` |
+| `TASK-18` | `#19` | Tổng hợp kết quả thực hiện và lập Báo cáo Tổng kết Sprint 01 (`Sprint 01 Completion Report`) | Nguyễn Khả Như (`KN12345N`) | Chặng 6 | 05/11/2026 | 05/11/2026 | 4h | 4h | **Done** | `docs/reports/sprint-01-report.md` |
+| `TASK-19` | `#20` | Tổ chức nghiệm thu nội bộ và lập Biên bản họp Sprint Review & Sprint Retrospective cho Sprint 01 | Nguyễn Khả Như (`KN12345N`) | Chặng 6 | 05/11/2026 | 05/11/2026 | 3h | 3h | **Done** | `docs/reports/sprint-01-review-retrospective.md` |
+| **Tổng** | **#1..#20** | **Toàn bộ 19 công việc của Sprint 01 (`PB-01`)** | **5 thành viên** | **6 Chặng** | **03/11/2026** | **05/11/2026** | **99h** | **99h** | **100% Done** | **Đầy đủ tài liệu, mã nguồn FE/BE/DB và bộ kiểm thử tự động** |
 
 ---
 
@@ -60,12 +60,12 @@ Toàn bộ 19 công việc của Sprint 01 đã được triển khai theo 6 ch�
 
 | STT | Họ và tên thành viên | Tài khoản GitHub | Vai trò đảm nhiệm trong Sprint 01 | Các Task phụ trách | Số lượng Task | Tổng số giờ (Hours) | Tỷ trọng nỗ lực |
 | :-: | :--- | :--- | :--- | :--- | :-: | :-: | :-: |
-| 1 | **Trần Ngọc Long** | `LONGTRAN2700` | Thiết lập Repo/Board, Thiết kế UI/UX Figma, Phát triển Frontend React | `TASK-01, 10, 11, 12` | 4 | **23h** | 23.71% |
-| 2 | **Nguyễn Khả Như** | `KN12345N` | Phân tích Nghiệp vụ (BA), Thiết kế Use Case UML, Tài liệu Dự án & Quản lý Sprint (PM) | `TASK-02, 03, 17, 18, 19` | 5 | **19h** | 19.59% |
-| 3 | **Lê Quang Linh** | `linh285` | Kiến trúc Backend Core, Thiết kế CSDL PostgreSQL, Migration/Seed Data & Xử lý lỗi `ProblemDetails` | `TASK-04, 05, 06` | 3 | **19h** | 19.59% |
-| 4 | **Thạch Ý** | `ThachY-23120411` | Thiết kế Class/Sequence Diagram, Xây dựng RESTful APIs Hợp đồng, Khách hàng & Tải tệp đính kèm | `TASK-07, 08, 09` | 3 | **19h** | 19.59% |
-| 5 | **Đặng Hữu Phú** | `PhuHuuDang` | Thiết kế Test Cases, Phát triển Unit/Integration Tests, Cấu hình GitHub Actions CI & Kiểm thử E2E | `TASK-13, 14, 15, 16` | 4 | **19h** | 19.59% |
-| **Tổng** | **5 thành viên** | `zero-seven-team` | **Phối hợp liên chức năng (Cross-functional Scrum Team)** | **`TASK-01` .. `TASK-19`** | **19** | **97h** | **100%** |
+| 1 | **Trần Ngọc Long** | `LONGTRAN2700` | Thiết lập Repo/Board, Thiết kế UI/UX Figma, Phát triển Frontend React | `TASK-01, 10, 11, 12` | 4 | **23h** | 23.23% |
+| 2 | **Nguyễn Khả Như** | `KN12345N` | Phân tích Nghiệp vụ (BA), Thiết kế Use Case UML, Tài liệu Dự án & Quản lý Sprint (PM) | `TASK-02, 03, 17, 18, 19` | 5 | **19h** | 19.19% |
+| 3 | **Lê Quang Linh** | `linh285` | Kiến trúc Backend Core, Thiết kế CSDL PostgreSQL, Migration/Seed Data & Xử lý lỗi `ProblemDetails` | `TASK-04, 05, 06` | 3 | **19h** | 19.19% |
+| 4 | **Thạch Ý** | `ThachY-23120411` | Thiết kế Class/Sequence Diagram, Xây dựng RESTful APIs Hợp đồng, Khách hàng & Tải tệp đính kèm | `TASK-07, 08, 09` | 3 | **19h** | 19.19% |
+| 5 | **Đặng Hữu Phú** | `PhuHuuDang` | Thiết kế Test Cases, Phát triển Unit/Integration Tests, Cấu hình GitHub Actions CI & Kiểm thử E2E | `TASK-13, 14, 15, 16` | 4 | **19h** | 19.19% |
+| **Tổng** | **5 thành viên** | `zero-seven-team` | **Phối hợp liên chức năng (Cross-functional Scrum Team)** | **`TASK-01` .. `TASK-19`** | **19** | **99h** | **100%** |
 
 ---
 
@@ -75,16 +75,16 @@ Toàn bộ 19 công việc của Sprint 01 đã được triển khai theo 6 ch�
 
 | Chặng thực hiện | Các Task hoàn thành trong chặng | Số Task hoàn thành | Giờ công hoàn thành | Giờ công còn lại (Remaining Effort) | Tỷ lệ hoàn thành tích lũy |
 | :--- | :--- | :-: | :-: | :-: | :-: |
-| **Khởi đầu Sprint** | - | 0 | 0h | **97h** | 0.0% |
-| **Chặng 1 (Khởi tạo & Đặc tả)** | `TASK-01` (4h), `TASK-02` (4h), `TASK-04` (8h), `TASK-11` (4h) | 4 | 20h | **77h** | 20.6% |
-| **Chặng 2 (Thiết kế, DB, Middleware & Test Cases)** | `TASK-03` (5h), `TASK-05` (8h), `TASK-06` (3h), `TASK-10` (6h), `TASK-13` (5h), `TASK-15` (4h) | 6 | 31h | **46h** | 52.6% |
-| **Chặng 3 (UML Kỹ thuật & Backend APIs)** | `TASK-07` (6h), `TASK-08` (8h), `TASK-09` (5h) | 3 | 19h | **27h** | 72.2% |
-| **Chặng 4 (Ghép nối Frontend, Auto Tests & README)** | `TASK-12` (9h), `TASK-14` (6h), `TASK-17` (3h) | 3 | 18h | **9h** | 90.7% |
-| **Chặng 5 (Kiểm thử E2E & Báo cáo QA)** | `TASK-16` (4h) | 1 | 4h | **5h** | 94.8% |
-| **Chặng 6 (Tổng kết Sprint, Review & Retro)** | `TASK-18` (4h), `TASK-19` (3h - hoàn tất nghiệm thu) | 2 | 7h *(gồm rà soát cuối)* | **0h** | **100.0%** |
+| **Khởi đầu Sprint** | - | 0 | 0h | **99h** | 0.0% |
+| **Chặng 1 (Khởi tạo & Đặc tả)** | `TASK-01` (4h), `TASK-02` (4h), `TASK-04` (8h), `TASK-11` (4h) | 4 | 20h | **79h** | 20.2% |
+| **Chặng 2 (Thiết kế, DB, Middleware & Test Cases)** | `TASK-03` (5h), `TASK-05` (8h), `TASK-06` (3h), `TASK-10` (6h), `TASK-13` (5h), `TASK-15` (4h) | 6 | 31h | **48h** | 51.5% |
+| **Chặng 3 (UML Kỹ thuật & Backend APIs)** | `TASK-07` (6h), `TASK-08` (8h), `TASK-09` (5h) | 3 | 19h | **29h** | 70.7% |
+| **Chặng 4 (Ghép nối Frontend, Auto Tests & README)** | `TASK-12` (9h), `TASK-14` (6h), `TASK-17` (3h) | 3 | 18h | **11h** | 88.9% |
+| **Chặng 5 (Kiểm thử E2E & Báo cáo QA)** | `TASK-16` (4h) | 1 | 4h | **7h** | 92.9% |
+| **Chặng 6 (Tổng kết Sprint, Review & Retro)** | `TASK-18` (4h), `TASK-19` (3h - hoàn tất nghiệm thu) | 2 | 7h | **0h** | **100.0%** |
 
 ### 4.2. Chỉ số Vận tốc (Sprint Velocity) & Chất lượng Kỹ thuật
-- **Cam kết đầu Sprint (Committed Velocity)**: `8 Story Points` (`PB-01`) / `97 giờ`.
+- **Cam kết đầu Sprint (Committed Velocity)**: `8 Story Points` (`PB-01`) / `99 giờ`.
 - **Hoàn thành thực tế (Completed Velocity)**: `8 Story Points` (`100%`).
 - **Tổng số bài kiểm thử tự động đã xây dựng**: **81 bài kiểm thử** (`24` Unit Tests + `13` API Error Tests + `15` Infrastructure Schema Tests + `26` PostgreSQL Integration Tests + `3` Frontend Schema Regression Tests) - **Tỷ lệ vượt qua: 100% (81/81 Pass)**.
 

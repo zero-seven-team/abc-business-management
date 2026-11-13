@@ -48,9 +48,15 @@ public static class CreateContractValidator
             errors["effectiveTo"] = ["Ngày kết thúc hiệu lực phải lớn hơn hoặc bằng ngày bắt đầu hiệu lực."];
         }
 
-        if (request.ContractValue <= 0 || request.ContractValue > 999_999_999_999_999.99m)
+        if (request.ContractValue <= 0
+            || request.ContractValue > 999_999_999_999_999.99m
+            || decimal.Round(request.ContractValue, 2) <= 0)
         {
             errors["contractValue"] = ["Giá trị hợp đồng phải lớn hơn 0."];
+        }
+        else if (decimal.Round(request.ContractValue, 2) != request.ContractValue)
+        {
+            errors["contractValue"] = ["Giá trị hợp đồng tối đa 2 chữ số thập phân."];
         }
 
         var currency = string.IsNullOrWhiteSpace(request.Currency)

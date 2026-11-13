@@ -6,6 +6,7 @@ import {
   Search,
   Bell,
   ChevronDown,
+  Menu,
 } from 'lucide-react';
 
 interface BreadcrumbMeta {
@@ -56,17 +57,31 @@ function getBreadcrumbMeta(pathname: string): BreadcrumbMeta {
   };
 }
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  onOpenMenu?: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onOpenMenu }) => {
   const location = useLocation();
   const breadcrumb = getBreadcrumbMeta(location.pathname);
 
   return (
     <header className="sticky top-0 z-20 flex h-14 w-full items-center justify-between gap-4 border-b border-[#E2E8F0] bg-[#FFFFFF] px-6">
-      {/* Dynamic Breadcrumb */}
-      <nav
-        aria-label="Breadcrumb"
-        className="flex items-center gap-2 text-xs whitespace-nowrap"
-      >
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          aria-label="Mở menu điều hướng"
+          onClick={onOpenMenu}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 md:hidden"
+        >
+          <Menu className="h-4.5 w-4.5" />
+        </button>
+
+        {/* Dynamic Breadcrumb */}
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-xs whitespace-nowrap"
+        >
         <Link
           to="/"
           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
@@ -83,6 +98,7 @@ export const Header: React.FC = () => {
           {breadcrumb.current}
         </span>
       </nav>
+      </div>
 
       {/* Center Search Bar */}
       <div className="hidden md:flex items-center w-80 lg:w-96">

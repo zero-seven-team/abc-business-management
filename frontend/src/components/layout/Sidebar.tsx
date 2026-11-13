@@ -16,10 +16,16 @@ import {
   ChevronDown,
   Box,
   Building2,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ open = false, onClose }) => {
   const location = useLocation();
   const isContractSection = location.pathname.startsWith('/contracts');
   const [contractsOpen, setContractsOpen] = useState<boolean>(true);
@@ -27,7 +33,10 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className="fixed inset-y-0 left-0 z-30 flex w-[240px] shrink-0 flex-col bg-[#0F172A] text-slate-300 select-none"
+      className={cn(
+        'fixed inset-y-0 left-0 z-40 w-[240px] shrink-0 flex-col bg-[#0F172A] text-slate-300 select-none md:flex',
+        open ? 'flex' : 'hidden'
+      )}
       aria-label="Thanh điều hướng chính"
     >
       {/* Brand Logo */}
@@ -43,6 +52,14 @@ export const Sidebar: React.FC = () => {
             Quản trị Kinh doanh
           </div>
         </div>
+        <button
+          type="button"
+          aria-label="Đóng menu"
+          onClick={onClose}
+          className="rounded-md p-1 text-slate-400 hover:bg-slate-800 hover:text-white md:hidden"
+        >
+          <X className="h-4 w-4" />
+        </button>
       </div>
 
       {/* Navigation */}

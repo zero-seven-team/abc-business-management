@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/card';
 import { Badge, CONTRACT_STATUS_LABELS } from '@/components/ui/badge';
 import { formatCurrencyVND } from '@/lib/utils';
+import { loadRecentCreatedContracts } from '@/services/contractService';
 import type { ContractStatus } from '@/types/contract';
 
 interface RecentRecordItem {
@@ -163,7 +164,32 @@ export const DashboardPage: React.FC = () => {
   const [rightTab, setRightTab] = useState<'priority' | 'reminders'>('priority');
   const [statusFilter, setStatusFilter] = useState<QuickStatusFilter>('ALL');
 
-  const filteredRecords = RECENT_RECORDS.filter((record) => {
+  const sessionContracts = loadRecentCreatedContracts();
+  const recentCreatedRecords: RecentRecordItem[] = sessionContracts.map((item) => {
+    const d = item.createdAt ? new Date(item.createdAt) : new Date();
+    const formattedDate = Number.isNaN(d.getTime())
+      ? 'Hôm nay'
+      : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+    return {
+      code: item.contractCode,
+      title: item.contractName,
+      customerName: item.customerName,
+      value: Number(item.contractValue),
+      status: item.status ?? 'Draft',
+      updatedAt: formattedDate,
+    };
+  });
+
+  const allRecords: RecentRecordItem[] = [
+    ...recentCreatedRecords,
+    ...RECENT_RECORDS.filter(
+      (sample) => !recentCreatedRecords.some((created) => created.code === sample.code)
+    ),
+  ];
+
+  const draftCount = 4 + recentCreatedRecords.filter((r) => r.status === 'Draft').length;
+
+  const filteredRecords = allRecords.filter((record) => {
     if (statusFilter === 'ALL') return true;
     if (statusFilter === 'InReview') {
       return record.status === 'InReview' || record.status === 'UnderReview';
@@ -222,7 +248,7 @@ export const DashboardPage: React.FC = () => {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-2">
             <span className="text-2xl font-bold tracking-tight text-slate-900">
-              04
+              {String(draftCount).padStart(2, '0')}
             </span>
             <span className="text-xs text-slate-500 whitespace-nowrap">
               Đang soạn thảo

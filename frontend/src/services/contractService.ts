@@ -26,7 +26,35 @@ export async function createContractDraft(
     '/contracts',
     serializeContractDraft(payload)
   );
+  saveRecentCreatedContract(response.data);
   return response.data;
+}
+
+const RECENT_CREATED_CONTRACTS_KEY = 'abc_recent_created_contracts_v1';
+
+export function saveRecentCreatedContract(contract: ContractDraftResponse): void {
+  try {
+    const existing = loadRecentCreatedContracts().filter(
+      (item) => item.id !== contract.id && item.contractCode !== contract.contractCode
+    );
+    sessionStorage.setItem(
+      RECENT_CREATED_CONTRACTS_KEY,
+      JSON.stringify([contract, ...existing])
+    );
+  } catch {
+    // Bỏ qua lỗi sessionStorage
+  }
+}
+
+export function loadRecentCreatedContracts(): ContractDraftResponse[] {
+  try {
+    const raw = sessionStorage.getItem(RECENT_CREATED_CONTRACTS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as ContractDraftResponse[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 /**

@@ -192,6 +192,14 @@ public class ContractValidationTests
         request.ServiceTerms = new string('s', 4000);     // đúng 4000 ký tự
 
         await AssertPassesValidation(request);
+
+        request.ContractValue = 0.001m;
+        var subCentException = await AssertValidationFails(request);
+        Assert.Equal(["contractValue"], subCentException.Errors.Keys);
+
+        request.ContractValue = 125.125m;
+        var scaleException = await AssertValidationFails(request);
+        Assert.Equal(["contractValue"], scaleException.Errors.Keys);
     }
 
     [Fact]
